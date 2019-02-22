@@ -1,44 +1,25 @@
 package com.aticsi.sample;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-/*
-
-
- * 
- * 
- * Copyright (C) 2018 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); youmay not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
-import org.apache.beam.runners.dataflow.DataflowRunner;
-import org.apache.beam.runners.dataflow.options.DataflowPipelineOptions;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.io.gcp.pubsub.PubsubIO;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
-import org.apache.beam.sdk.transforms.Create;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.ParDo;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Mutation;
 import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.Table;
 
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.bigtable.beam.CloudBigtableIO;
 import com.google.cloud.bigtable.beam.CloudBigtableTableConfiguration;
+import com.google.cloud.bigtable.hbase.BigtableConfiguration;
 import com.google.gson.GsonBuilder;
 
 /**
@@ -74,11 +55,11 @@ public class StarterPipeline {
 
 //		pipeline.apply(Create.of("Hello", "World"));
 //
-		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
-				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
+//		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
+//				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
 //
-		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM))
-				.apply(CloudBigtableIO.writeToTable(config));
+		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM));
+//			;	.apply(CloudBigtableIO.writeToTable(config));
 
 		pipeline.run();
 	}
@@ -96,6 +77,31 @@ public class StarterPipeline {
 			put.addColumn("CF".getBytes(), "EAN".getBytes(), event.getEan().getBytes());
 			put.addColumn("CF".getBytes(), "QTE".getBytes(), event.getQte().getBytes());
 			put.addColumn("CF".getBytes(), "EVENT_ID".getBytes(), event.getEventID().getBytes());
+			
+			
+			 try (Connection connection = BigtableConfiguration.connect(PROJECT_ID, BIGTABLE_INSTANCE_ID)) {
+
+			      // Create a connection to the table that already exists
+			      // Use try-with-resources to make sure the connection to the table is closed correctly
+			      try (Table table = connection.getTable(TableName.valueOf(TABLE_ID))) {
+
+			    	  
+			    	  table.put(put);
+			    	  
+
+			        System.out.printf("ligne inseree");
+
+			      }  catch (IOException e) {
+			    	  e.printStackTrace();
+			        // handle exception while connecting to a table
+			        throw e;
+			      }
+			    } catch (IOException e) {
+			    	e.printStackTrace();
+			      System.err.println("Exception while running quickstart: " + e.getMessage());
+			      e.printStackTrace();
+			    }
+			
 			c.output(put);
 		}
 	};
