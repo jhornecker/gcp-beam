@@ -72,12 +72,12 @@ public class StarterPipeline {
 
 		Pipeline pipeline = Pipeline.create(options);
 
-		pipeline.apply(Create.of("Hello", "World"));
+//		pipeline.apply(Create.of("Hello", "World"));
 //
 //		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
 //				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
 //
-//		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM))
+		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM));
 //				.apply(CloudBigtableIO.writeToTable(config));
 
 		pipeline.run();
@@ -89,6 +89,7 @@ public class StarterPipeline {
 
 		@ProcessElement
 		public void processElement(DoFn<String, Mutation>.ProcessContext c) throws Exception {
+			System.out.println("process element " + c.element());
 //			String message = c.element().getData();
 			CartEvent event = new GsonBuilder().create().fromJson(c.element(), CartEvent.class);
 			Put put = new Put((event.getEan() + "#" + System.currentTimeMillis()).getBytes());
