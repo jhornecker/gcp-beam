@@ -50,7 +50,7 @@ public class StarterPipeline {
 	 * Runs a pipeline which reads in JSON from Pubsub, feeds the JSON to a
 	 * Javascript UDF, and writes the JSON encoded Entities to Datastore.
 	 *
-	 * @param args arguments to the pipeline
+	 * @param args arguments to the pipeline   
 	 */
 	public static void main(String[] args) {
 		DataflowPipelineOptions options = PipelineOptionsFactory.as(DataflowPipelineOptions.class);
