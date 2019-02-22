@@ -28,14 +28,14 @@ import org.apache.beam.runners.dataflow.DataflowRunner;
 import org.apache.beam.runners.dataflow.options.DataflowPipelineOptions;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.io.gcp.pubsub.PubsubIO;
+import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
+import org.apache.beam.sdk.transforms.Create;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.hadoop.hbase.client.Mutation;
 import org.apache.hadoop.hbase.client.Put;
 
-import com.google.api.client.util.Lists;
-import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.bigtable.beam.CloudBigtableIO;
 import com.google.cloud.bigtable.beam.CloudBigtableTableConfiguration;
@@ -58,28 +58,27 @@ public class StarterPipeline {
 	 * Javascript UDF, and writes the JSON encoded Entities to Datastore.
 	 *
 	 * @param args arguments to the pipeline
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
+	 * @throws IOException
+	 * @throws FileNotFoundException
 	 */
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		DataflowPipelineOptions options = PipelineOptionsFactory.as(DataflowPipelineOptions.class);
-
-		options.setProject(PROJECT_ID);
-		options.setRunner(DataflowRunner.class);
-		options.setStreaming(true);
-		GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/resources/aticsi-pubsub.json"))
-				.createScoped(
-						com.google.common.collect.Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
-		options.setGcpCredential(credentials);
-		options.setGcpTempLocation("gs://aticsi-bucket/tmp/");
+//		DataflowPipelineOptions options = PipelineOptionsFactory.as(DataflowPipelineOptions.class);
+		PipelineOptions options = PipelineOptionsFactory.fromArgs(args).as(PipelineOptions.class);
+//		options.setProject(PROJECT_ID);
+//		options.setRunner(DataflowRunner.class);
+//		options.setStreaming(true);
+//		options.setGcpCredential(credentials);
+//		options.setGcpTempLocation("gs://aticsi-bucket/tmp/");
 
 		Pipeline pipeline = Pipeline.create(options);
 
-		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
-				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
-
-		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM))
-				.apply(CloudBigtableIO.writeToTable(config));
+		pipeline.apply(Create.of("Hello", "World"));
+//
+//		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
+//				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
+//
+//		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM))
+//				.apply(CloudBigtableIO.writeToTable(config));
 
 		pipeline.run();
 	}
