@@ -29,7 +29,7 @@ import com.google.gson.GsonBuilder;
  */
 public class StarterPipeline {
 
-	static String PROJECT_ID = "acticsi-pubsub";
+	static String PROJECT_ID = "aticsi-pubsub"; 
 	static String BIGTABLE_INSTANCE_ID = "bigtable-inst-1";
 	static String TABLE_ID = "CartEvent";
 	private static final String SUBS = "projects/aticsi-pubsub/subscriptions/my-sub";
