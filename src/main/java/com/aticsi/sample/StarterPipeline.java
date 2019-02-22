@@ -1,5 +1,9 @@
 package com.aticsi.sample;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /*
 
 
@@ -30,6 +34,9 @@ import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.hadoop.hbase.client.Mutation;
 import org.apache.hadoop.hbase.client.Put;
 
+import com.google.api.client.util.Lists;
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.bigtable.beam.CloudBigtableIO;
 import com.google.cloud.bigtable.beam.CloudBigtableTableConfiguration;
 import com.google.gson.GsonBuilder;
@@ -50,24 +57,31 @@ public class StarterPipeline {
 	 * Runs a pipeline which reads in JSON from Pubsub, feeds the JSON to a
 	 * Javascript UDF, and writes the JSON encoded Entities to Datastore.
 	 *
-	 * @param args arguments to the pipeline   
+	 * @param args arguments to the pipeline
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		DataflowPipelineOptions options = PipelineOptionsFactory.as(DataflowPipelineOptions.class);
 
 		options.setProject(PROJECT_ID);
 		options.setRunner(DataflowRunner.class);
 		options.setStreaming(true);
+		GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/resources/aticsi-pubsub.json"))
+				.createScoped(
+						com.google.common.collect.Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
+		options.setGcpCredential(credentials);
 		options.setGcpTempLocation("gs://dataflow-bk-1/tmp/");
 
 		Pipeline pipeline = Pipeline.create(options);
-		
+
 		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
 				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
 
-		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM)).apply(CloudBigtableIO.writeToTable(config));
+		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM))
+				.apply(CloudBigtableIO.writeToTable(config));
 
-		pipeline.run(); 
+		pipeline.run();
 	}
 
 	// [START bigtable_dataflow_connector_process_element]
