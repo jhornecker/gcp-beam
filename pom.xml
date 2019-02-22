@@ -59,6 +59,7 @@
 					<version>${exec-maven-plugin.version}</version>
 					<configuration>
 						<cleanupDaemonThreads>false</cleanupDaemonThreads>
+						<mainClass>com.aticsi.sample.StarterPipeline</mainClass>
 					</configuration>
 				</plugin>
 			</plugins>

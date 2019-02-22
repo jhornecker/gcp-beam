@@ -41,7 +41,7 @@ import com.google.gson.GsonBuilder;
  */
 public class StarterPipeline {
 
-	static String PROJECT_ID = "actisi-pubsub";
+	static String PROJECT_ID = "acticsi-pubsub";
 	static String BIGTABLE_INSTANCE_ID = "bigtable-inst-1";
 	static String TABLE_ID = "CartEvent";
 	private static final String TOPIC = "my-topic";
@@ -58,7 +58,7 @@ public class StarterPipeline {
 		options.setProject(PROJECT_ID);
 		options.setRunner(DataflowRunner.class);
 		options.setStreaming(true);
-		options.setTemplateLocation("gs://aticsi-pubsub/dataflow-bk-1/tmp");
+		options.setGcpTempLocation("gs://dataflow-bk-1/tmp");
 
 		Pipeline pipeline = Pipeline.create(options);
 		

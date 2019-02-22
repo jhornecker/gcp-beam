@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "aticsi-pubsub",
+  "private_key_id": "706f442539057bc62a64d2880d3dd4f05c46c45c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCcGi963Y8EEZIj\n2GbcN8+W4GDaDgdGj+5sgsQ2cpIwatSg9DbyuJ4yulqsvbzhOmFjMpAcGJ5WETFM\n90TiKn9qAmT6sd/NMALuXyF4/9tBWfc12KV7EOwDqCTDPf4igDjSw0zJbpPuACjF\nO+9u3KIknX0U0+LIVL3QC4Wu0en9jl9Rn24tYcb+uen7k7PBUr4y6CuzbAZ0oy6E\noSiadij6a/wrESq0QfdxAXz2A4FaTes8spwFOjLT7cjaDaV24FplQrQdzU6glbqS\nrg7XJSUn7yzvBWwIJeai3wWtBohs9KmmCCTy27bHgbHvv9erzFE+SQbm0V3nYbC4\n+OeMOXj7AgMBAAECggEAFHhSlZgMMwpi0ZSFGIexDyXpTW7dgWFKcKxNMp6fkP3R\nWDHuKrIO/LP3RAO1iwtuzeVJhIWt7bdfcapTPB06jBo4R6+fm3aaS8vpxcY3aEB1\n7He2a4byjCA2gevVMY0C5pB5t0hq2aDnt8V+RllkYczNJDgM2xxRr8BzDVO1jWwz\neOZcJvjh2CsKaGTpbncWmXe0xSfMoHIG1SwT0I3QvdDZholnzuvknhQLZLywruyw\nNq5AcqEpan5s/Oys8p4ksg3NNHDK88E8KDtOXlEK0Em0c7gPD/Qv0pROk2tQMGRU\nnj+g/6AmUwgYnCs7mvO1nGf9IQC/0LZ6pOEbjwdyYQKBgQDYJ42eMOScWDIvwLJk\nNn919zSrvTrcybKequDLM9laDF4xEr2e+3Q3qCGZWD+UVatGJtcGAVaKG3haOZJ0\nVhnnja/4WAMn1XBTdQiawQaj5uCWhX6I3wvouHnulRvRvYYSK406cYVBo7g2NoOp\nlil+osi91NIkFRGmSN953W+9swKBgQC44Lxodln9/xgQZPYbq3Ut4kSPuUm2+cyo\nqIOghlF3EMyTpcrtPSHEA/RmLz+fswjI2ZyzAK8NPHwewRRd5BgHerz+yfXHkvW+\nh8SYFPH3tkm5lFje/WUQmYu4jcMqoTzBdmvs2dWJH05otfaKuGtXGhzs/sHltzJU\nzvPSmegDmQKBgQCa7ubsb4E9q131qnpzqDh+Vr3zJ4TMguo8HqFYJYbyq5DMPfGa\nxgQMbMAAiSexbCKC+w3+6PCdt4jxqviV2K1issViDbvdTnjf6TBMtHTNAI0UdwU2\nmCGSIsCLSWeSU/WIip0FOh9Y6D/+495FrTN66LVYk/Y4FL384ZkFYbpZTwKBgGar\nT5ZHm4RlpMx99Pq6xhFcJa0XPeuiX9iN9MMxtI4Fw0Z/fOkw2M6NT61rsc6TU16P\nEumJiK02GMvPd+sIX5vPuqNYLujNITHVHgVDJHjnP5wS2SPE3tpQGvq7p1XGQwJB\nLIBVHLPQse+OlcLF1b6CXuvyMmXKzeWxJFChbeqJAoGAZe3tywTAagOLSy9KFEAP\nZSQPf4fJCLDTHWfaJdjwJ82d7rVidpRcAzmgpvDvgYWqJLx8Q0duuoKN0RYl4THS\n4HyFZIGEezX8ZhBbcylgSekIrdb3v5VFcZULBfaCSAKNY/HqR6R8mm4aMB1M3YB+\n7W5SUA4mucJfJYG/kkUmCfs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dataflow-all-918@aticsi-pubsub.iam.gserviceaccount.com",
+  "client_id": "103612436981129417317",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dataflow-all-918%40aticsi-pubsub.iam.gserviceaccount.com"
+}
