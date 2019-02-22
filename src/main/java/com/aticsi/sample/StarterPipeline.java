@@ -44,7 +44,7 @@ public class StarterPipeline {
 	static String PROJECT_ID = "acticsi-pubsub";
 	static String BIGTABLE_INSTANCE_ID = "bigtable-inst-1";
 	static String TABLE_ID = "CartEvent";
-	private static final String TOPIC = "my-topic";
+	private static final String SUBS = "projects/aticsi-pubsub/subscriptions/my-sub";
 
 	/**
 	 * Runs a pipeline which reads in JSON from Pubsub, feeds the JSON to a
@@ -65,7 +65,7 @@ public class StarterPipeline {
 		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
 				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
 
-		pipeline.apply(PubsubIO.readStrings().fromTopic(TOPIC)).apply(ParDo.of(MUTATION_TRANSFORM)).apply(CloudBigtableIO.writeToTable(config));
+		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS).apply(ParDo.of(MUTATION_TRANSFORM)).apply(CloudBigtableIO.writeToTable(config));
 
 		pipeline.run();
 	}
