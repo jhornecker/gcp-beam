@@ -55,11 +55,11 @@ public class StarterPipeline {
 
 //		pipeline.apply(Create.of("Hello", "World"));
 //
-//		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
-//				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
+		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
+				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
 //
-		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM));
-//				.apply(CloudBigtableIO.writeToTable(config));
+		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM))
+				.apply(CloudBigtableIO.writeToTable(config));
 
 		pipeline.run();
 	}
@@ -78,26 +78,26 @@ public class StarterPipeline {
 			put.addColumn("CF".getBytes(), "QTE".getBytes(), event.getQte().getBytes());
 			put.addColumn("CF".getBytes(), "EVENT_ID".getBytes(), event.getEventID().getBytes());
 
-			try (Connection connection = BigtableConfiguration.connect(PROJECT_ID, BIGTABLE_INSTANCE_ID)) {
+//			try (Connection connection = BigtableConfiguration.connect(PROJECT_ID, BIGTABLE_INSTANCE_ID)) {
 
 				// Create a connection to the table that already exists
 				// Use try-with-resources to make sure the connection to the table is closed
 				// correctly
-				try (Table table = connection.getTable(TableName.valueOf(TABLE_ID))) {
-
-					table.put(put);
-					System.out.printf("ligne inseree");
-
-				} catch (IOException e) {
-					e.printStackTrace();
-					// handle exception while connecting to a table
-					throw e;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.err.println("Exception while running quickstart: " + e.getMessage());
-				e.printStackTrace();
-			}
+//				try (Table table = connection.getTable(TableName.valueOf(TABLE_ID))) {
+//
+//					table.put(put);
+//					System.out.printf("ligne inseree");
+//
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//					// handle exception while connecting to a table
+//					throw e;
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//				System.err.println("Exception while running quickstart: " + e.getMessage());
+//				e.printStackTrace();
+//			}
 
 			c.output(put);
 		}
