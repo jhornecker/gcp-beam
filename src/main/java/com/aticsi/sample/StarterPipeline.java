@@ -55,11 +55,11 @@ public class StarterPipeline {
 
 //		pipeline.apply(Create.of("Hello", "World"));
 //
-//		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
-//				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
+		CloudBigtableTableConfiguration config = new CloudBigtableTableConfiguration.Builder().withProjectId(PROJECT_ID)
+				.withInstanceId(BIGTABLE_INSTANCE_ID).withTableId(TABLE_ID).build();
 //
-		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM));
-//				.apply(CloudBigtableIO.writeToTable(config));
+		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM))
+				.apply(CloudBigtableIO.writeToTable(config));
 
 		pipeline.run();
 	}
