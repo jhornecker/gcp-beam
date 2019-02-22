@@ -71,7 +71,7 @@ public class StarterPipeline {
 				.createScoped(
 						com.google.common.collect.Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
 		options.setGcpCredential(credentials);
-		options.setGcpTempLocation("gs://dataflow-bk-1/tmp/");
+		options.setGcpTempLocation("gs://aticsi-bucket/tmp/");
 
 		Pipeline pipeline = Pipeline.create(options);
 
