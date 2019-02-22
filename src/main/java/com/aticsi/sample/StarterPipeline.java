@@ -67,7 +67,7 @@ public class StarterPipeline {
 
 		pipeline.apply(PubsubIO.readStrings().fromSubscription(SUBS)).apply(ParDo.of(MUTATION_TRANSFORM)).apply(CloudBigtableIO.writeToTable(config));
 
-		pipeline.run();
+		pipeline.run(); 
 	}
 
 	// [START bigtable_dataflow_connector_process_element]
