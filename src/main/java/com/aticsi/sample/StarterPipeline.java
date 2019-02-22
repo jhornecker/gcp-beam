@@ -58,7 +58,7 @@ public class StarterPipeline {
 		options.setProject(PROJECT_ID);
 		options.setRunner(DataflowRunner.class);
 		options.setStreaming(true);
-		options.setGcpTempLocation("gs://dataflow-bk-1/tmp");
+//		options.setGcpTempLocation("gs://dataflow-bk-1/tmp");
 
 		Pipeline pipeline = Pipeline.create(options);
 		
